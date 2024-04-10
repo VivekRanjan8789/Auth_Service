@@ -1,10 +1,10 @@
 const validateUserSignup = (req, res, next) => {
-        if(!(req.body.email || req.body.password)) {
+        if(!(req.body.email) || !(req.body.password)) {
             return res.status(400).json({
                 success: false,
                 data: {},
                 message : "something went wrong",
-                err: 'email or password is missing in the signup request'
+                err: 'email or password is missing in the request'
             })
         }
 

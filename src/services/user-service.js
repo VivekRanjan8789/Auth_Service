@@ -29,8 +29,8 @@ class UserService  {
                 console.log("password doesn't match");
                 throw{error: "Incorrect password"};
             }
-            // step 3 -> if passwords match then create a token and send it to the user
-            
+            // step 3 -> if passwords match then create a token and send it to the user  
+                     
             const newJWT = this.createToken({email: user.email, id: user.id});
             return newJWT;
             } catch (error) {
@@ -41,9 +41,27 @@ class UserService  {
     
     }
 
+    async isAuthenticated(token){
+        try {
+            const response =  this.verifyToken(token);
+            // console.log(response);
+            if(!response) {
+                throw {error: 'Invalid Token'}
+            }
+            const user = this.userRepository.getById(response.id);
+            if(!user){
+                throw({error: 'invalid token'})
+            }
+            return user.id;
+        } catch (error) {
+            console.log("something went wrong in the auth process");
+            throw(error)
+        }
+    }
+
     createToken(user){
         try {
-            var token= jwt.sign(user,JWT_KEY, {expiresIn: 30});
+            var token= jwt.sign(user,JWT_KEY, {expiresIn:'1h'});
             return token;           
         } catch (error) {
             console.log("something went wrong in token creation");
@@ -74,4 +92,6 @@ class UserService  {
 
 
 
-module.exports = UserService
+module.exports = {
+    UserService
+}
