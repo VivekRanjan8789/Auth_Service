@@ -17,11 +17,8 @@ const prepareAndStartServer = () => {
        app.listen(3001,async ()=>{
          console.log(`Server Started at: ${PORT}`);
           
-         const u1 = await user.findByPk(4)
-         const r1 = await Role.findByPk(1)
-        //  u1.addRole(r1)
-         const response = await u1.hasRole(r1);
-         console.log(response);
+
+
        })
 }
 

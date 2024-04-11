@@ -28,9 +28,7 @@ const create = async (req,res) => {
 
 const signIn = async (req, res) => {
     try {
-        console.log(req.body.email);
         const response = await userService.signIn(req.body.email,req.body.password);
-
         return res.status(200).json({
             success: true,
             message: "signin successfully",
@@ -70,8 +68,28 @@ const isAuthenticated = async (req,res) =>{
     }
  }
 
+  const isAdmin = async (req,res) => {
+      try {
+        const response = await userService.isAdmin(req.body.id)
+        return res.status(200).json({
+            success: true,
+            err: {},
+            data: response,
+            message: 'successfully fetched whether user is admin or not'
+           })
+      } catch (error) {
+        res.status(500).json({
+        data: {},
+        message: "something went wrong in veryfing whether user is admin or not",
+        success: false,
+        err: error
+       })
+      }
+  }
+
 module.exports = {
     create,
     signIn,
-    isAuthenticated
+    isAuthenticated,
+    isAdmin,
 }
