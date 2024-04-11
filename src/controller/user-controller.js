@@ -17,11 +17,11 @@ const create = async (req,res) => {
         });
      } catch (error) {
         console.log("something went wrong on controller layer");
-        res.status(500).json({
+        res.status(error.statusCode).json({
             data: {},
-            message: "something went wrong. Can't signup",
+            message: error.message,
             success: false,
-            err: error
+            err: error.explanation
         })
     }
 } 
