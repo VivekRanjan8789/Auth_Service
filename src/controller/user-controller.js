@@ -31,18 +31,18 @@ const signIn = async (req, res) => {
         const response = await userService.signIn(req.body.email,req.body.password);
         return res.status(200).json({
             success: true,
-            message: "signin successfully",
+            message: "signed in successfully",
             data: response,
             err: {},
 
        });       
     } catch (error) {
-        console.log("either email or password is incorrect");
-        res.status(500).json({
+        console.log(error);
+        res.status(error.statusCode).json({
             data: {},
-            message: "something went wrong. not loggedin",
+            message: error.message,
             success: false,
-            err: error
+            err: error.explanation
         })
     }
 }
